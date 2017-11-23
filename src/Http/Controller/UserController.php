@@ -62,9 +62,15 @@ class UserController implements ControllerProviderInterface
         ->bind('api_article')
         ->method('GET|POST');
 
+        $controllers->get('/list-article',[$this, 'listPostAction'])
+        ->bind('api_list_article');
+
         $controllers->match('/tag',[$this, 'tagAction'])
         ->bind('api_tag')
         ->method('GET|POST');
+
+        $controllers->get('/list-tag',[$this, 'listTagAction'])
+        ->bind('api_list_tag');
 
         return $controllers;
     }
@@ -155,6 +161,8 @@ class UserController implements ControllerProviderInterface
 
     public function articleAction(Request $request)
     {
+        $tag = $this->app['category.repository']->findAll();
+
         if($request->getMethod() == 'POST')
         {
             $slugify = new Slugify();
@@ -164,9 +172,9 @@ class UserController implements ControllerProviderInterface
             $data->setBody($request->get('body'));
             $data->setStatus(0);
 
-            $name1 = md5(uniqid()). $request->files->get('image')->guessExtension();
-            $allowed = array('png,jpg,jpeg');
-            $image = $request->files->get('image');
+            $name1 = md5(uniqid()). '.' . $request->files->get('gambar')->guessExtension();
+            $allowed = array('jpg','png','jpeg');
+            $image = $request->files->get('gambar');
             $ext = pathinfo($name1, PATHINFO_EXTENSION);
             if(in_array($ext,$allowed)) {
                 if($image instanceof UploadedFile) {
@@ -177,7 +185,9 @@ class UserController implements ControllerProviderInterface
                             'message_error',
                             'ukuran gambar tidak boleh lebih dari 1 mb'
                         );
-                        return $this->app->redirect($this->app['url_generator']->generate('api_artilce'));
+
+                        return 'data tidak boleh lebih dari 1 mb';
+//                        return $this->app->redirect($this->app['url_generator']->generate('api_list_article'));
                     }
                 }
             }else {
@@ -185,27 +195,35 @@ class UserController implements ControllerProviderInterface
                     'messsage_error',
                     'extension gambar harus .jpg, .png, .jpeg'
                 );
-                return $this->app->redirect($this->app['url_generator']->generate('api_article'));
+
+                return 'extension gambar harus .jpg, .png, .jpeg';
+//                return $this->app->redirect($this->app['url_generator']->generate('api_list_article'));
             }
+
 
             $arrNewTag = [];
             foreach ($request->get('tag') as $item) {
                 array_push($arrNewTag,$item);
             }
 
-            $data->setTag($arrNewTag);
+            $data->setTag(serialize($arrNewTag));
             $data->setMetaKeyword($request->get('meta-keyword'));
             $data->setMetaDescription($request->get('meta-description'));
 
-
-//            return var_dump($data);
             $this->app['orm.em']->persist($data);
             $this->app['orm.em']->flush();
 
-            return $this->app->redirect($this->app['url_generator']->generate(''));
+            $this->app['session']->getFlashBag()->add(
+                'message_success',
+                'data berhasil disimpan'
+            );
+
+            return $this->app->redirect($this->app['url_generator']->generate('api_list_article'));
         }
 
-        return $this->app['twig']->render('post/post.html.twig');
+        return $this->app['twig']->render('post/post.html.twig',[
+            'tag' => $tag
+        ]);
     }
 
     public function homeAction()
@@ -222,10 +240,32 @@ class UserController implements ControllerProviderInterface
             $this->app['orm.em']->persist($data);
             $this->app['orm.em']->flush();
 
-            return 'data berhasil disimpan';
+            $this->app['session']->getFlashBag(
+                'message_success',
+                'data telah berhasil disimpan'
+            );
+
+            return $this->app->redirect($this->app['url_generator']->generate('api_list_tag'));
         }
 
         return $this->app['twig']->render('tag/tag.html.twig');
     }
+    
+    public function listTagAction()
+    {
+        $data = $this->app['category.repository']->findAll();
+
+        return $this->app['twig']->render('tag/list-tag.html.twig',[
+            'data' => $data
+        ]);
+    }
+    
+    public function listPostAction()
+    {
+        $data = $this->app['article.repository']->findAll();
+
+        return $this->app['twig']->render('post/list-post.html.twig',['data' => $data]);
+    }
+
 
 }

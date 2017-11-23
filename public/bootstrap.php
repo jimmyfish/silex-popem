@@ -60,4 +60,12 @@ $app['user.repository'] = function () use ($app) {
     return $app['orm.em']->getRepository(\Silex\Api\Domain\Entity\User::class);
 };
 
+$app['category.repository'] = function () use ($app) {
+    return $app['orm.em']->getRepository(\Silex\Api\Domain\Entity\Category::class);
+};
+
+$app['article.repository'] = function () use ($app) {
+    return $app['orm.em']->getRepository(\Silex\Api\Domain\Entity\Article::class);
+};
+
 

@@ -14,7 +14,7 @@ use Silex\Api\Domain\Contracts\Repository\ArticleRepositoryInterface;
 use Silex\Api\Domain\Entity\Article;
 
 
-class DoctrinePostRepository extends EntityRepository implements ArticleRepositoryInterface
+class DoctrineArticleRepository extends EntityRepository implements ArticleRepositoryInterface
 {
 
     /**

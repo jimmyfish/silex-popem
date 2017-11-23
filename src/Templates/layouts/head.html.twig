@@ -14,7 +14,8 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ app.request.basepath }}/assets/dist/fonts/icomoon/icomoon.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ app.request.basepath }}/assets/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="https:////cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    {#<link rel="stylesheet" href="{{ app.request.basepath }}/assets/plugins/datatables/dataTables.bootstrap.css">#}
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ app.request.basepath }}/assets/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -92,6 +93,12 @@
                     <a href="{{ ('/article') }}">
                         <i class="fa fa-globe"></i>
                         <span>Post</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ ('/tag') }}">
+                        <i class="fa fa-circle"></i>
+                        <span>Tag</span>
                     </a>
                 </li>
                 {#{% if ((app.session.get('role')['value']) == 0) %}#}
@@ -299,8 +306,9 @@
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ app.request.basepath }}/assets/bootstrap/js/bootstrap.min.js"></script>
 <!-- DataTables -->
-<script src="{{ app.request.basepath }}/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="{{ app.request.basepath }}/assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="https:////cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+{#<script src="{{ app.request.basepath }}/assets/plugins/datatables/jquery.dataTables.min.js"></script>#}
+{#<script src="{{ app.request.basepath }}/assets/plugins/datatables/dataTables.bootstrap.min.js"></script>#}
 <!-- SlimScroll -->
 <script src="{{ app.request.basepath }}/assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
