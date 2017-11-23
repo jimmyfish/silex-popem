@@ -1,0 +1,34 @@
+<?php
+
+
+return [
+    'common' => [
+        'debug' => true
+    ],
+    'db' => [
+        'db.options' => [
+            'driver' => 'pdo_mysql',
+            'host' => '127.0.0.1',
+            'username' => 'root',
+            'password' => 'menara34',
+            'dbname' => 'api'
+        ],
+    ],
+    'twig' => [
+        'twig.path' => __DIR__ . '/../src/Templates',
+        'twig.options' => [
+            'auto_reload' => true
+        ]
+    ],
+    'orm' => [
+        'orm.em.options' => [
+            'mappings' => [
+                [
+                    'type' => 'annotation',
+                    'namespace' => 'Silex\Api\Domain\Entity',
+                    'path' => __DIR__ . '/../src/Domain/Entity'
+                ],
+            ],
+        ]
+    ]
+];
