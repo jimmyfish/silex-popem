@@ -1,0 +1,92 @@
+{% extends 'layouts/head.html.twig' %}
+
+{% block content %}
+    <section class="table-layout animated fadeIn">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+                <div class="col-md-6">
+                    <div class="f-center">
+                        <i class="imoon imoon-5x imoon-earth"></i>
+                        <h1>Artikel Baru</h1>
+                    </div>
+                    <div class="panel" style="border:6px solid rgba(204, 204, 204,0.5)">
+                        <div class="panel-heading">
+                            <span class="panel-title"><i class="imoon imoon-quill"></i> Input Informations</span>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="title">Title</label>
+                                        <input type="text" name="title" id="title" class="form-control" placeholder="input title">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <textarea name="body" id="content" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="image">Gambar</label>
+                                        <input type="file" accept="image/*" name="image" id="image" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for=""></label>
+                                        <select name="tag[]" id="select2" class="form-control">
+
+                                        </select>
+                                        {#<input type="text" name="tag[]" id="select2" class="form-control" multiple="multiple">#}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="meta-keyword">Meta Keyword</label>
+                                        <input type="text" name="meta-keyword" id="meta-keyword" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="meta-description">Meta Description</label>
+                                        <input type="text" name="meta-description" id="meta-description" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="submit" class="btn btn-primary btn-block btn-flat">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block customJS %}
+    <script>
+        tinymce.init({
+            selector:'#content',
+            height:300,
+            menubar: 'tools',
+            statusbar:false,
+            plugins: 'code',
+//            plugins: 'image',
+            inline_styles: false
+        });
+
+        $('#select2').select2({
+            multiple : true
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,4 @@
+vendor/
+app/config.php
+.idea/
+cli-config.php
